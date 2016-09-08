@@ -8,16 +8,15 @@
 
 import SpriteKit
 class SpriteMoverNode:MoverNode {
-    var node:SKSpriteNode!
-    
-    override func updatePath() {
-        node.position = endPoint
-    }
+    private  var node:SKSpriteNode!
+    private let nodeSize:CGFloat = 20
     
     override init() {
         super.init()
         node = SKSpriteNode(imageNamed: "snowflake")
-        node.size = CGSize(width: 20, height: 20)
+        node.colorBlendFactor = 1
+        node.color = UIColor().randomBrightColor()
+        node.size = CGSize(width: nodeSize, height: nodeSize)
         self.addChild(node)
     }
     
@@ -27,3 +26,8 @@ class SpriteMoverNode:MoverNode {
     
 }
 
+extension SpriteMoverNode {
+    override func updatePath() {
+        node.position = endPoint
+    }
+}

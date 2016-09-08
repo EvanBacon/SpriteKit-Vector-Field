@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6CBA2DF91D8216C00090E06A /* NodeIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBA2DF81D8216C00090E06A /* NodeIndex.swift */; };
+		6CBA2DFB1D8219F70090E06A /* LineNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBA2DFA1D8219F70090E06A /* LineNode.swift */; };
+		6CBA2DFD1D82211A0090E06A /* UIColor+Bacon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBA2DFC1D82211A0090E06A /* UIColor+Bacon.swift */; };
 		6CD34DCE1D81C6AE00C4F98A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD34DCD1D81C6AE00C4F98A /* AppDelegate.swift */; };
 		6CD34DD01D81C6AE00C4F98A /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 6CD34DCF1D81C6AE00C4F98A /* GameScene.sks */; };
 		6CD34DD21D81C6AE00C4F98A /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CD34DD11D81C6AE00C4F98A /* GameScene.swift */; };
@@ -41,6 +44,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6CBA2DF81D8216C00090E06A /* NodeIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeIndex.swift; sourceTree = "<group>"; };
+		6CBA2DFA1D8219F70090E06A /* LineNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNode.swift; sourceTree = "<group>"; };
+		6CBA2DFC1D82211A0090E06A /* UIColor+Bacon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Bacon.swift"; sourceTree = "<group>"; };
 		6CD34DCA1D81C6AE00C4F98A /* Vector Field.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vector Field.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CD34DCD1D81C6AE00C4F98A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6CD34DCF1D81C6AE00C4F98A /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -88,6 +94,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6CBA2DF71D82112A0090E06A /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				6CD34DCF1D81C6AE00C4F98A /* GameScene.sks */,
+				6CD34DD31D81C6AE00C4F98A /* GameViewController.swift */,
+				6CD34DCD1D81C6AE00C4F98A /* AppDelegate.swift */,
+				6CD34DD51D81C6AE00C4F98A /* Main.storyboard */,
+				6CD34DD81D81C6AE00C4F98A /* Assets.xcassets */,
+				6CD34DDA1D81C6AE00C4F98A /* LaunchScreen.storyboard */,
+				6CD34DDD1D81C6AE00C4F98A /* Info.plist */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		6CBA2DFE1D8222340090E06A /* Vector */ = {
+			isa = PBXGroup;
+			children = (
+				6CD34DD11D81C6AE00C4F98A /* GameScene.swift */,
+				6CD34DFF1D81C78400C4F98A /* CGPoint+Extensions.swift */,
+				6CD34E011D8208C700C4F98A /* MoverNode.swift */,
+				6CBA2DF81D8216C00090E06A /* NodeIndex.swift */,
+				6CD34E031D8208FF00C4F98A /* LineMoverNode.swift */,
+				6CD34E051D82091600C4F98A /* SpriteMoverNode.swift */,
+				6CD34E071D82092B00C4F98A /* GridNode.swift */,
+				6CBA2DFC1D82211A0090E06A /* UIColor+Bacon.swift */,
+				6CBA2DFA1D8219F70090E06A /* LineNode.swift */,
+			);
+			name = Vector;
+			sourceTree = "<group>";
+		};
 		6CD34DC11D81C6AE00C4F98A = {
 			isa = PBXGroup;
 			children = (
@@ -111,19 +147,8 @@
 		6CD34DCC1D81C6AE00C4F98A /* Vector Field */ = {
 			isa = PBXGroup;
 			children = (
-				6CD34DCD1D81C6AE00C4F98A /* AppDelegate.swift */,
-				6CD34DFF1D81C78400C4F98A /* CGPoint+Extensions.swift */,
-				6CD34DCF1D81C6AE00C4F98A /* GameScene.sks */,
-				6CD34DD11D81C6AE00C4F98A /* GameScene.swift */,
-				6CD34E011D8208C700C4F98A /* MoverNode.swift */,
-				6CD34E031D8208FF00C4F98A /* LineMoverNode.swift */,
-				6CD34E051D82091600C4F98A /* SpriteMoverNode.swift */,
-				6CD34E071D82092B00C4F98A /* GridNode.swift */,
-				6CD34DD31D81C6AE00C4F98A /* GameViewController.swift */,
-				6CD34DD51D81C6AE00C4F98A /* Main.storyboard */,
-				6CD34DD81D81C6AE00C4F98A /* Assets.xcassets */,
-				6CD34DDA1D81C6AE00C4F98A /* LaunchScreen.storyboard */,
-				6CD34DDD1D81C6AE00C4F98A /* Info.plist */,
+				6CBA2DF71D82112A0090E06A /* Application */,
+				6CBA2DFE1D8222340090E06A /* Vector */,
 			);
 			path = "Vector Field";
 			sourceTree = "<group>";
@@ -278,8 +303,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CBA2DF91D8216C00090E06A /* NodeIndex.swift in Sources */,
+				6CBA2DFB1D8219F70090E06A /* LineNode.swift in Sources */,
 				6CD34DD21D81C6AE00C4F98A /* GameScene.swift in Sources */,
 				6CD34DD41D81C6AE00C4F98A /* GameViewController.swift in Sources */,
+				6CBA2DFD1D82211A0090E06A /* UIColor+Bacon.swift in Sources */,
 				6CD34E001D81C78400C4F98A /* CGPoint+Extensions.swift in Sources */,
 				6CD34E041D8208FF00C4F98A /* LineMoverNode.swift in Sources */,
 				6CD34E061D82091600C4F98A /* SpriteMoverNode.swift in Sources */,

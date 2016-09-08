@@ -9,15 +9,7 @@
 import SpriteKit
 
 class LineMoverNode:MoverNode {
-    var line:SKShapeNode!
-    
-    override func updatePath() {
-        let ref = CGPathCreateMutable()
-        CGPathMoveToPoint(ref, nil, origin.x, origin.y)
-        
-        CGPathAddLineToPoint(ref, nil, endPoint.x , endPoint.y)
-        line.path = ref
-    }
+    private var line:SKShapeNode!
     
     override init() {
         super.init()
@@ -33,5 +25,15 @@ class LineMoverNode:MoverNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension LineMoverNode {
+    override func updatePath() {
+        let ref = CGPathCreateMutable()
+        CGPathMoveToPoint(ref, nil, origin.x, origin.y)
+        
+        CGPathAddLineToPoint(ref, nil, endPoint.x , endPoint.y)
+        line.path = ref
     }
 }
