@@ -97,6 +97,15 @@ public extension CGPoint {
     public var angle: CGFloat {
         return atan2(y, x)
     }
+    
+    /**
+     * Returns a random floating point number between 0.0 and 1.0, inclusive.
+     */
+    public func random() -> CGPoint {
+        return CGPoint(x: x.random(max: x), y: y.random(max: y))
+    }
+    
+    
 }
 
 /**
