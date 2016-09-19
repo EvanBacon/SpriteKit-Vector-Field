@@ -25,7 +25,8 @@ class DynamicNode:SKSpriteNode {
     }
     
     convenience init(id:Int, origin:CGPoint, radius:CGFloat) {
-        self.init(texture: SKTexture(imageNamed: "snowflake"), color: UIColor.blueColor(), size: CGSize(width: radius * 2, height: radius * 2))
+        self.init(texture: SKTexture(imageNamed: "circle"), color: .black, size: CGSize(width: radius * 2, height: radius * 2))
+        colorBlendFactor = 1
         self.id = id
         self.animFrame = CGFloat(id)
         self.position = origin
@@ -42,7 +43,7 @@ class DynamicNode:SKSpriteNode {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func update(velocity:CGPoint, collide:CGPoint, cellWorld:CGSize) {
+    func update(_ velocity:CGPoint, collide:CGPoint, cellWorld:CGSize) {
         a = CGPoint()
         
         a += velocity

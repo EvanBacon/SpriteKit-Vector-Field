@@ -26,55 +26,61 @@ class GameScene: SKScene {
     
     var velocityField:VelocityFieldNode!
     var velocity:CGPoint?
-    override func didMoveToView(view: SKView) {
-        buildField()
+    
+    override func didMove(to view: SKView) {
+        
+        
+        velocityField = buildNode()
+//        self.blur()
+//        buildField()
+
     }
 }
 
 extension SKNode {
     func centerInParent() {
         guard let parent = self.parent else { return }
-        position = CGPoint(x:CGRectGetMidX(parent.frame), y:CGRectGetMidY(parent.frame))
+        position = CGPoint(x:parent.frame.midX, y:parent.frame.midY)
     }
 }
 
 extension GameScene {
     func buildField() {
-        velocityField = buildNode()
         
+        nodes = Array(repeating: Array(repeating: nil, count: gridSize), count: gridSize)
+        grid = buildGrid()
+        self.addChild(grid)
         
-//        nodes = Array(count: gridSize, repeatedValue: Array(count: gridSize, repeatedValue: nil))
-//        grid = buildGrid()
-//        self.addChild(grid)
-//        
-//        for i in 0..<gridSize {
-//            for j in 0..<gridSize {
-//                let node = buildNode(CGPoint(x: CGFloat(i) * padding, y: CGFloat(j) * padding), x: i, y: j)
-//                nodes[Int(i)][Int(j)] = node
-//                grid.addChild(node)
-//            }
-//        }
+        for i in 0..<gridSize {
+            for j in 0..<gridSize {
+                let node = buildNode(CGPoint(x: CGFloat(i) * padding, y: CGFloat(j) * padding), x: i, y: j)
+                nodes[Int(i)][Int(j)] = node
+                grid.addChild(node)
+            }
+        }
     }
     
     
     func buildNode() -> VelocityFieldNode {
-        let grid = VelocityFieldNode(nodes: 200, size: CGSize(width: UIScreen.mainScreen().bounds.size.width, height: UIScreen.mainScreen().bounds.size.width), gridSize: 30, radius: 50)
-        grid.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        let grid = VelocityFieldNode(nodes: 100, size: CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.width), gridSize: 30, radius: 50)
         
         self.addChild(grid)
+        
+        grid.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         grid.centerInParent()
+        
 
         return grid
     }
     
     func buildGrid() -> GridNode {
         let grid = GridNode(size: gridSize, padding: padding)
-        grid.position = CGPoint(x:CGRectGetMidX(self.frame) - grid.size.width / 2, y:CGRectGetMidY(self.frame) - grid.size.height / 2 )
+        grid.position = CGPoint(x:self.frame.midX - grid.size.width / 2, y:self.frame.midY - grid.size.height / 2 )
         
         return grid
     }
     
-    func buildNode(origin:CGPoint, x:Int, y:Int) -> MoverNode {
+    func buildNode(_ origin:CGPoint, x:Int, y:Int) -> MoverNode {
         if useVectors {
             return LineMoverNode(index: NodeIndex(x: x, y: y), origin: origin, padding: padding)
         } else {            
@@ -85,11 +91,11 @@ extension GameScene {
 }
 
 extension GameScene {
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
-        
+        velocityField.sharper()
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let location = touch.location(in: self)
             
             touchPoint = location
             velocity = CGPoint()
@@ -98,9 +104,9 @@ extension GameScene {
         }
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            let location = touch.locationInNode(self)
+            let location = touch.location(in: self)
 //            let velocity = abs(location.distanceTo(touchPoint!)) * 0.01
             
             velocity = location - touchPoint!
@@ -110,10 +116,10 @@ extension GameScene {
         }
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchPoint = nil
     }
-    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchPoint = nil
     }
     
@@ -127,15 +133,15 @@ extension GameScene {
             if let velocity = velocity {
                 
                 let halfNode = CGPoint(x: velocityField.size.width / 2, y: velocityField.size.height / 2)
-                let convertedPoint = (self.convertPoint(touchPoint, toNode: velocityField)) + halfNode
+                let convertedPoint = (self.convert(touchPoint, to: velocityField)) + halfNode
                 velocityField.addV(velocity, touchPoint:convertedPoint)
             }
         }
         
         velocityField.update()
     }
-    
-    override func update(currentTime: CFTimeInterval) {
+
+    override func update(_ currentTime: TimeInterval) {
         updateField()
         
         /* Called before each frame is rendered */
@@ -158,12 +164,13 @@ extension GameScene {
     }
     
     
-    func fakeTouch(point:CGPoint, velocity:CGFloat=1.0) {
+    func fakeTouch(_ point:CGPoint, velocity:CGFloat=1.0) {
         
         self.updateCursor(point)
         
-        let x = point.x.roundToValue(padding) / Int(padding)
-        let y = point.y.roundToValue(padding) / Int(padding)
+        var pp = point
+        let x = pp.x.roundToValue(padding) / Int(padding)
+        let y = pp.y.roundToValue(padding) / Int(padding)
         
         guard x >= 0 && x < nodes.count else { return }
         guard y >= 0 && y < nodes[x].count else { return }
@@ -176,14 +183,14 @@ extension GameScene {
 extension GameScene {
     
     
-    func updateCursor(point:CGPoint) {
+    func updateCursor(_ point:CGPoint) {
         guard useCursor else { return }
-        if let cursor = grid.childNodeWithName("cursor") {
+        if let cursor = grid.childNode(withName: "cursor") {
             cursor.removeFromParent()
         }
         
         let p = SKShapeNode(circleOfRadius: 10)
-        p.fillColor = UIColor.redColor()
+        p.fillColor = UIColor.red
         p.position = point
         p.name = "cursor"
         grid.addChild(p)
@@ -192,8 +199,8 @@ extension GameScene {
 
 
 extension CGFloat {
-    func roundToValue(value:CGFloat) -> Int {
-        return Int(value * round(self / value))
+    mutating func roundToValue(_ value:CGFloat) -> Int {
+        return Int(value * CGFloat(roundf(Float(self / value))))
     }
 }
 

@@ -8,12 +8,12 @@
 
 import SpriteKit
 class SpriteMoverNode:MoverNode {
-    private  var node:SKSpriteNode!
-    private let nodeSize:CGFloat = 20
+    fileprivate  var node:SKSpriteNode!
+    fileprivate let nodeSize:CGFloat = 20
     
     override init() {
         super.init()
-        node = SKSpriteNode(imageNamed: "snowflake")
+        node = SKSpriteNode(imageNamed: "circle")
         node.colorBlendFactor = 1
         node.color = UIColor().randomBrightColor()
         node.size = CGSize(width: nodeSize, height: nodeSize)

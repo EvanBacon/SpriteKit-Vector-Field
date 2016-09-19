@@ -42,7 +42,7 @@ public extension CGPoint {
     /**
      * Adds (dx, dy) to the point.
      */
-    public mutating func offset(dx dx: CGFloat, dy: CGFloat) -> CGPoint {
+    public mutating func offset(dx: CGFloat, dy: CGFloat) -> CGPoint {
         x += dx
         y += dy
         return self
@@ -71,7 +71,7 @@ public extension CGPoint {
         return len>0 ? self / len : CGPoint.zero
     }
     
-    public func cartesian(angle:CGFloat, radius:CGFloat) -> CGPoint {
+    public func cartesian(_ angle:CGFloat, radius:CGFloat) -> CGPoint {
         return CGPoint(x: x + (radius * cos(angle)), y: y + (radius * sin(angle)))
     }
     
@@ -86,7 +86,7 @@ public extension CGPoint {
     /**
      * Calculates the distance between two CGPoints. Pythagoras!
      */
-    public func distanceTo(point: CGPoint) -> CGFloat {
+    public func distanceTo(_ point: CGPoint) -> CGFloat {
         return (self - point).length()
     }
     
@@ -118,7 +118,7 @@ public func + (left: CGPoint, right: CGPoint) -> CGPoint {
 /**
  * Increments a CGPoint with the value of another.
  */
-public func += (inout left: CGPoint, right: CGPoint) {
+public func += (left: inout CGPoint, right: CGPoint) {
     left = left + right
 }
 
@@ -132,7 +132,7 @@ public func + (left: CGPoint, right: CGVector) -> CGPoint {
 /**
  * Increments a CGPoint with the value of a CGVector.
  */
-public func += (inout left: CGPoint, right: CGVector) {
+public func += (left: inout CGPoint, right: CGVector) {
     left = left + right
 }
 
@@ -146,7 +146,7 @@ public func - (left: CGPoint, right: CGPoint) -> CGPoint {
 /**
  * Decrements a CGPoint with the value of another.
  */
-public func -= (inout left: CGPoint, right: CGPoint) {
+public func -= (left: inout CGPoint, right: CGPoint) {
     left = left - right
 }
 
@@ -160,7 +160,7 @@ public func - (left: CGPoint, right: CGVector) -> CGPoint {
 /**
  * Decrements a CGPoint with the value of a CGVector.
  */
-public func -= (inout left: CGPoint, right: CGVector) {
+public func -= (left: inout CGPoint, right: CGVector) {
     left = left - right
 }
 
@@ -174,7 +174,7 @@ public func * (left: CGPoint, right: CGPoint) -> CGPoint {
 /**
  * Multiplies a CGPoint with another.
  */
-public func *= (inout left: CGPoint, right: CGPoint) {
+public func *= (left: inout CGPoint, right: CGPoint) {
     left = left * right
 }
 
@@ -189,7 +189,7 @@ public func * (point: CGPoint, scalar: CGFloat) -> CGPoint {
 /**
  * Multiplies the x and y fields of a CGPoint with the same scalar value.
  */
-public func *= (inout point: CGPoint, scalar: CGFloat) {
+public func *= (point: inout CGPoint, scalar: CGFloat) {
     point = point * scalar
 }
 
@@ -203,14 +203,14 @@ public func * (left: CGPoint, right: CGVector) -> CGPoint {
 /**
  * Multiplies a CGPoint with a CGVector.
  */
-public func *= (inout left: CGPoint, right: CGVector) {
+public func *= (left: inout CGPoint, right: CGVector) {
     left = left * right
 }
 
 //CGPoint+SpriteKit.swift
 extension CGPoint {
     func flipCoordinates() -> CGPoint {
-        return CGPoint(x: x, y: UIScreen.mainScreen().bounds.height - y)
+        return CGPoint(x: x, y: UIScreen.main.bounds.height - y)
     }
 }
 /**
@@ -223,7 +223,7 @@ public func / (left: CGPoint, right: CGPoint) -> CGPoint {
 /**
  * Divides a CGPoint by another.
  */
-public func /= (inout left: CGPoint, right: CGPoint) {
+public func /= (left: inout CGPoint, right: CGPoint) {
     left = left / right
 }
 
@@ -238,7 +238,7 @@ public func / (point: CGPoint, scalar: CGFloat) -> CGPoint {
 /**
  * Divides the x and y fields of a CGPoint by the same scalar value.
  */
-public func /= (inout point: CGPoint, scalar: CGFloat) {
+public func /= (point: inout CGPoint, scalar: CGFloat) {
     point = point / scalar
 }
 
@@ -252,13 +252,13 @@ public func / (left: CGPoint, right: CGVector) -> CGPoint {
 /**
  * Divides a CGPoint by a CGVector.
  */
-public func /= (inout left: CGPoint, right: CGVector) {
+public func /= (left: inout CGPoint, right: CGVector) {
     left = left / right
 }
 
 /**
  * Performs a linear interpolation between two CGPoint values.
  */
-public func lerp(start start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
+public func lerp(start: CGPoint, end: CGPoint, t: CGFloat) -> CGPoint {
     return start + (end - start) * t
 }
