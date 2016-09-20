@@ -8,49 +8,10 @@
 
 import Foundation
 import SpriteKit
-import CoreImage
-
-
-
-extension SKEffectNode {
-    func blur() {
-        shouldEnableEffects = true
-        
-        let filter: CIFilter = CIFilter(name: "CIGaussianBlur", withInputParameters: ["inputRadius" : NSNumber(value:10.0)])!
-        
-        self.filter = filter
-//        self.shouldRasterize = true
-    }
-    
-    func sharpen(amount:CGFloat = 1) {
-        shouldEnableEffects = true
-        shouldRasterize = true
-        let whiteSpecksFilter = CIFilter(name: "CIColorMatrix")!
-        whiteSpecksFilter.setValue(CIVector(x: 1, y: 0, z: 0, w: 0), forKey: "inputRVector")
-        whiteSpecksFilter.setValue(CIVector(x: 0, y: 1, z: 0, w: 0), forKey: "inputGVector")
-        whiteSpecksFilter.setValue(CIVector(x: 0, y: 0, z: 1, w: 0), forKey: "inputBVector")
-        whiteSpecksFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: 255), forKey: "inputAVector")
-        whiteSpecksFilter.setValue(CIVector(x: 0, y: 0, z: 0, w: 0), forKey: "inputBiasVector")
-        
-        self.filter = whiteSpecksFilter
-
-    }
-}
 
 class VelocityFieldNode:SKSpriteNode {
-    lazy var blurNode:SKEffectNode = {
-        let node = SKEffectNode()
-        node.blur()
-        
-        return node
-    }()
-    
-    lazy var sharpNode:SKEffectNode = {
-        let node = SKEffectNode()
-        node.sharpen()
-
-        return node
-    }()
+  
+    var gooNode:GooNode!
     
     var cropNode:SKCropNode!
 
@@ -59,12 +20,6 @@ class VelocityFieldNode:SKSpriteNode {
     var cells = [[VelocityCell?]]()
     var cellSize = CGSize()
     var friction:CGFloat = 0.99;
-    
-    var cur:CGFloat = 0
-    func sharper() {
-        cur += 0.1
-//        sharpenNode.sharpen(amount: cur )
-    }
     
     convenience init(nodes:Int, size:CGSize, gridSize:CGFloat, radius:CGFloat) {
         self.init(texture: nil, color: SKColor.white, size: size)
@@ -85,15 +40,14 @@ class VelocityFieldNode:SKSpriteNode {
 
 extension VelocityFieldNode {
     
-    
-    
     func setup(_ nodeCount:Int, nodeRadius:CGFloat) {
+        gooNode = GooNode()
         let node = SKCropNode()
         node.maskNode = SKSpriteNode(texture: nil, color:UIColor.black, size: self.size)
 
         self.addChild(node)
-        node.addChild(sharpNode)
-        sharpNode.addChild(blurNode)
+        node.addChild(gooNode)
+        
         
         let offset = CGPoint(x: -(frame.size.width / 2), y: -(frame.size.height / 2))
         for i in 0..<nodeCount {
@@ -101,7 +55,7 @@ extension VelocityFieldNode {
             balls.append(node)
             
             node.offset = offset
-            blurNode.addChild(node)
+            gooNode.addChild(node)
             
         }
         

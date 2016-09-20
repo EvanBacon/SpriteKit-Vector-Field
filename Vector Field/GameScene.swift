@@ -28,12 +28,7 @@ class GameScene: SKScene {
     var velocity:CGPoint?
     
     override func didMove(to view: SKView) {
-        
-        
         velocityField = buildNode()
-//        self.blur()
-//        buildField()
-
     }
 }
 
@@ -93,7 +88,6 @@ extension GameScene {
 extension GameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         /* Called when a touch begins */
-        velocityField.sharper()
         for touch in touches {
             let location = touch.location(in: self)
             
@@ -109,10 +103,11 @@ extension GameScene {
             let location = touch.location(in: self)
 //            let velocity = abs(location.distanceTo(touchPoint!)) * 0.01
             
-            velocity = location - touchPoint!
-            touchPoint = location
+            if let tp = touchPoint {
+                velocity = location - tp
+                touchPoint = location
+            }
 //            fakeTouch(self.convertPoint(location, toNode: grid), velocity: velocity)
-
         }
     }
     
